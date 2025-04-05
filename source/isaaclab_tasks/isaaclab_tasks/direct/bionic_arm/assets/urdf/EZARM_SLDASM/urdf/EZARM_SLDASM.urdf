@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="EZARM_SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-2.36122762587781E-18 -3.93537937646302E-19 0.0815294256931801"
+        rpy="0 0 0" />
+      <mass
+        value="0.403566371669411" />
+      <inertia
+        ixx="0.000951289819173348"
+        ixy="-1.07533479631894E-19"
+        ixz="-5.25984835922691E-20"
+        iyy="0.00100569106917335"
+        iyz="-8.08622793432171E-21"
+        izz="0.000168552823672512" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="palm_link">
+    <inertial>
+      <origin
+        xyz="0.000137638473861338 -0.00428767568752875 0.0545058625065118"
+        rpy="0 0 0" />
+      <mass
+        value="0.0765362216961075" />
+      <inertia
+        ixx="0.000161080254530765"
+        ixy="5.25642766934462E-08"
+        ixz="-1.1122683473908E-06"
+        iyy="0.000115373426183941"
+        iyz="4.62313329070689E-06"
+        izz="4.92288030967418E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/palm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/palm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="palm_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.168"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="palm_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="pinky_link">
+    <inertial>
+      <origin
+        xyz="0.0017820549626365 -0.000613293176069961 0.0163336690442433"
+        rpy="0 0 0" />
+      <mass
+        value="0.00284841498916435" />
+      <inertia
+        ixx="2.89069230552967E-07"
+        ixy="2.30953150442523E-09"
+        ixz="-1.78553709799799E-08"
+        iyy="2.99964229191471E-07"
+        iyz="2.91987211415557E-08"
+        izz="1.49822130411684E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pinky_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pinky_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pinky_joint"
+    type="revolute">
+    <origin
+      xyz="0.00053238 -0.04071 0.10826"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="palm_link" />
+    <child
+      link="pinky_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.5708"
+      upper="0"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="pinky_mimic_link">
+    <inertial>
+      <origin
+        xyz="0.001108703721593 0.0045741665917135 0.014620949600652"
+        rpy="0 0 0" />
+      <mass
+        value="0.00562690939472701" />
+      <inertia
+        ixx="7.101549995922E-07"
+        ixy="-9.17469905740974E-09"
+        ixz="-3.71039596021405E-08"
+        iyy="6.30896238954216E-07"
+        iyz="-1.56604741692031E-07"
+        izz="2.30295778229682E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pinky_mimic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pinky_mimic_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pinky_mimic_joint"
+    type="revolute">
+    <origin
+      xyz="0.0034275 0.00025066 0.032821"
+      rpy="0 0 0" />
+    <parent
+      link="pinky_link" />
+    <child
+      link="pinky_mimic_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+    <mimic
+      joint="pinky_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="ring_link">
+    <inertial>
+      <origin
+        xyz="0.00142294173005185 -0.00129072154615227 0.0203579955343289"
+        rpy="0 0 0" />
+      <mass
+        value="0.00382261211395928" />
+      <inertia
+        ixx="5.5202198701161E-07"
+        ixy="5.14714557279812E-09"
+        ixz="-2.55389597661868E-08"
+        iyy="5.69468033035362E-07"
+        iyz="7.35455548545626E-08"
+        izz="1.87705913426682E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/ring_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/ring_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ring_joint"
+    type="revolute">
+    <origin
+      xyz="0.00016823 -0.01558 0.11536"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="palm_link" />
+    <child
+      link="ring_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.48353"
+      upper="0"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="ring_mimic_link">
+    <inertial>
+      <origin
+        xyz="0.00114593130837312 0.00971703582685566 0.0156976568866269"
+        rpy="0 0 0" />
+      <mass
+        value="0.00635546550003613" />
+      <inertia
+        ixx="9.81246469917228E-07"
+        ixy="-2.51179183410803E-08"
+        ixz="-3.63935893335392E-08"
+        iyy="6.8606976657274E-07"
+        iyz="-3.59092627396867E-07"
+        izz="4.6569199688549E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/ring_mimic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/ring_mimic_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ring_mimic_joint"
+    type="revolute">
+    <origin
+      xyz="0.00286 0 0.0409"
+      rpy="0 0 0" />
+    <parent
+      link="ring_link" />
+    <child
+      link="ring_mimic_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+    <mimic
+      joint="ring_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="middle_link">
+    <inertial>
+      <origin
+        xyz="0.00040561519406054 -0.00143109939675033 0.0232048672174193"
+        rpy="0 0 0" />
+      <mass
+        value="0.00435101487895161" />
+      <inertia
+        ixx="7.37234099557229E-07"
+        ixy="1.59808182059263E-09"
+        ixz="-9.37016819913441E-09"
+        iyy="7.60393826704403E-07"
+        iyz="9.11626914346312E-08"
+        izz="2.06162513305201E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/middle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/middle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="middle_joint"
+    type="revolute">
+    <origin
+      xyz="0.00016823 0.0072093 0.11515"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="palm_link" />
+    <child
+      link="middle_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.48353"
+      upper="0"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="middle_mimic_link">
+    <inertial>
+      <origin
+        xyz="0.000345295830107457 0.0127273362711506 0.017012076660915"
+        rpy="0 0 0" />
+      <mass
+        value="0.00710270866127889" />
+      <inertia
+        ixx="1.29588990900105E-06"
+        ixy="-9.12339135108535E-09"
+        ixz="-1.07891576281314E-08"
+        iyy="7.9717380163647E-07"
+        iyz="-5.20228611199478E-07"
+        izz="6.88150500246118E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/middle_mimic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/middle_mimic_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="middle_mimic_joint"
+    type="revolute">
+    <origin
+      xyz="0.00080281 0 0.045993"
+      rpy="0 0 0" />
+    <parent
+      link="middle_link" />
+    <child
+      link="middle_mimic_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+    <mimic
+      joint="middle_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="pointer_link">
+    <inertial>
+      <origin
+        xyz="-4.46665277924196E-08 -0.0014597840450139 0.0231866899386781"
+        rpy="0 0 0" />
+      <mass
+        value="0.00430054577129335" />
+      <inertia
+        ixx="7.26809156394049E-07"
+        ixy="-5.764573167025E-12"
+        ixz="-3.33068282933426E-12"
+        iyy="7.51246448794758E-07"
+        iyz="8.87861916234826E-08"
+        izz="2.02703110164293E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pointer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pointer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pointer_joint"
+    type="revolute">
+    <origin
+      xyz="0.00016729 0.028465 0.1106"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="palm_link" />
+    <child
+      link="pointer_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.5708"
+      upper="0"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="pointer_mimic_link">
+    <inertial>
+      <origin
+        xyz="4.83338837181067E-05 0.0094810874779204 0.0159732580922908"
+        rpy="0 0 0" />
+      <mass
+        value="0.00632636073888433" />
+      <inertia
+        ixx="9.74252336731948E-07"
+        ixy="-7.16546854696862E-12"
+        ixz="-1.51928793858106E-10"
+        iyy="6.89677632645022E-07"
+        iyz="-3.53352679409106E-07"
+        izz="4.49289688683031E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pointer_mimic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/pointer_mimic_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pointer_mimic_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.046"
+      rpy="0 0 0" />
+    <parent
+      link="pointer_link" />
+    <child
+      link="pointer_mimic_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+    <mimic
+      joint="pointer_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="thumb_swivel_link">
+    <inertial>
+      <origin
+        xyz="-0.0240609552040626 0.000537100663146885 0.00573428571376206"
+        rpy="0 0 0" />
+      <mass
+        value="0.00807597668556131" />
+      <inertia
+        ixx="1.08043710320532E-06"
+        ixy="1.68624171132001E-07"
+        ixz="1.08772170504102E-06"
+        iyy="3.03147252079576E-06"
+        iyz="-1.34639716373521E-07"
+        izz="2.48856447081332E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_swivel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_swivel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="thumb_swivel_joint"
+    type="revolute">
+    <origin
+      xyz="0.0022482 0.0086241 0.033795"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="palm_link" />
+    <child
+      link="thumb_swivel_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.39626"
+      upper="0"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="thumb_link">
+    <inertial>
+      <origin
+        xyz="0.0256273064262082 -0.00431444754602431 4.34295689258346E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.00621086328026103" />
+      <inertia
+        ixx="3.16321134231842E-07"
+        ixy="-1.30190480627785E-07"
+        ixz="1.58690548652609E-11"
+        iyy="2.36922113077845E-06"
+        iyz="-8.246517082752E-12"
+        izz="2.34094726755801E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="thumb_joint"
+    type="revolute">
+    <origin
+      xyz="-0.052668 0.0037572 0.02242"
+      rpy="1.7695 -0.48108 3.0361" />
+    <parent
+      link="thumb_swivel_link" />
+    <child
+      link="thumb_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="1.5708"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="thumb_mimic_link">
+    <inertial>
+      <origin
+        xyz="-0.00895194995208004 -0.00630026646699922 -0.000131518860607249"
+        rpy="0 0 0" />
+      <mass
+        value="0.00432808679097275" />
+      <inertia
+        ixx="1.19629651941025E-07"
+        ixy="-1.00661494397318E-08"
+        ixz="-3.96031076910321E-09"
+        iyy="4.16050123473635E-07"
+        iyz="-8.42552917910592E-11"
+        izz="4.31485445387053E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_mimic_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://EZARM_SLDASM/meshes/thumb_mimic_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="thumb_mimic_joint"
+    type="revolute">
+    <origin
+      xyz="0.057532 0.0040526 0"
+      rpy="-3.1416 -0.01399 3.1416" />
+    <parent
+      link="thumb_link" />
+    <child
+      link="thumb_mimic_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="100"
+      velocity="100" />
+    <mimic
+      joint="thumb_joint"
+      multiplier="-1"
+      offset="0" />
+  </joint>
+</robot>
