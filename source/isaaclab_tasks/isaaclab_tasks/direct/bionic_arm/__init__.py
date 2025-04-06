@@ -23,29 +23,18 @@ gym.register(
         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
     },
 )
+
+gym.register(
+    id="Isaac-Empty-World-Test-v0",
+    entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": "isaaclab_tasks.direct.empty_env.my_empty_env_cfg:EmptyEnvCfg",
+        "skrl_cfg_entry_point": "isaaclab_tasks.direct.shadow_hand.agents:skrl_ppo_cfg.yaml",
+    },
+)
+
 ### Vision
-
-gym.register(
-    id="Isaac-Repose-Cube-Shadow-Vision-Direct-v0",
-    entry_point=f"{__name__}.shadow_hand_vision_env:ShadowHandVisionEnv",
-    disable_env_checker=True,
-    kwargs={
-        "env_cfg_entry_point": f"{__name__}.shadow_hand_vision_env:ShadowHandVisionEnvCfg",
-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:ShadowHandVisionFFPPORunnerCfg",
-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_vision_cfg.yaml",
-    },
-)
-
-gym.register(
-    id="Isaac-Repose-Cube-Shadow-Vision-Direct-Play-v0",
-    entry_point=f"{__name__}.shadow_hand_vision_env:ShadowHandVisionEnv",
-    disable_env_checker=True,
-    kwargs={
-        "env_cfg_entry_point": f"{__name__}.shadow_hand_vision_env:ShadowHandVisionEnvPlayCfg",
-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:ShadowHandVisionFFPPORunnerCfg",
-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_vision_cfg.yaml",
-    },
-)
 
 gym.register(
     id="Isaac-Repose-Cube-BionicArm-Vision-Direct-v0",
