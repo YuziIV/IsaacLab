@@ -12,6 +12,7 @@ import isaaclab.envs.mdp as mdp
 from isaaclab.sim.spawners.materials.physics_materials_cfg import RigidBodyMaterialCfg
 from isaaclab.managers import EventTermCfg as EventTerm
 from isaaclab.managers import SceneEntityCfg
+
 usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd"
 
 #@configclass
@@ -132,8 +133,9 @@ class EmptyEnvCfg(DirectRLEnvCfg):
 
 
     # Robot setup using the converted USD file and actuator config
+    #BIONIC_ARM_CFG = ArticulationCfg(
     robot_cfg = ArticulationCfg(
-        prim_path="/World/Robot",
+        prim_path="/World/envs/env_.*/Robot",
         spawn=sim_utils.UsdFileCfg(
             usd_path=usd_path,
             activate_contact_sensors=False,
@@ -143,14 +145,13 @@ class EmptyEnvCfg(DirectRLEnvCfg):
                 max_depenetration_velocity=1000.0,
             ),
             articulation_props=sim_utils.ArticulationRootPropertiesCfg(
-                enabled_self_collisions=True,
+                enabled_self_collisions=False,
                 solver_position_iteration_count=8,
                 solver_velocity_iteration_count=0,
                 sleep_threshold=0.005,
                 stabilization_threshold=0.0005,
             ),
             joint_drive_props=sim_utils.JointDrivePropertiesCfg(drive_type="force"),
-            #fixed_tendons_props=sim_utils.FixedTendonPropertiesCfg(limit_stiffness=30.0, damping=0.1),
         ),
         init_state=ArticulationCfg.InitialStateCfg(
             pos=(0.0, -0.15, 0.5),
@@ -188,6 +189,13 @@ class EmptyEnvCfg(DirectRLEnvCfg):
         },
         soft_joint_pos_limit_factor=1.0,
     )
+    #robot_cfg: ArticulationCfg = BIONIC_ARM_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
+    #    init_state=ArticulationCfg.InitialStateCfg(
+    #        pos=(0.0, -0.15, 0.5),
+    #        rot=(0.7071068, 0.7071068, 0.0, 0.0),
+    #        joint_pos={".*": 0.0},
+    #    )
+    #)
     actuated_joint_names = [
         "palm_joint",
         "pinky_joint",
@@ -204,6 +212,7 @@ class EmptyEnvCfg(DirectRLEnvCfg):
         "pointer_mimic_link",
         "thumb_mimic_link",
     ]
+    
 
     
     # in-hand object
