@@ -6,6 +6,7 @@ from isaaclab.sim import SimulationCfg
 from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.assets import ArticulationCfg, Articulation
 from isaaclab_tasks.direct.bionic_arm.urdf_importer import ImportURDF
+
 import os
 
 urdf_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/urdf/EZARM_SLDASM/urdf/EZARM_SLDASM.urdf"
@@ -24,17 +25,17 @@ class EmptyEnv(DirectRLEnv):
             urdf_importer = ImportURDF(urdf_path, usd_path)
             status, prim_path = urdf_importer.import_urdf_to_usd()
             print("URDF import status:", status, "Prim path:", prim_path)
-
-        # Spawn the robot into the stage
-        robot_cfg = ArticulationCfg(
-            prim_path="/World/Robot",
-            spawn=UsdFileCfg(usd_path=usd_path),
-            init_state=ArticulationCfg.InitialStateCfg(
-                pos=(0.0, 0.0, 0.0),
-                rot=(1.0, 0.0, 0.0, 0.0),
-                joint_pos={".*": 0.0},
-            ),
-        )
+        
+        ## Spawn the robot into the stage
+        #robot_cfg = ArticulationCfg(
+        #    prim_path="/World/Robot",
+        #    spawn=UsdFileCfg(usd_path=usd_path),
+        #    init_state=ArticulationCfg.InitialStateCfg(
+        #        pos=(0.0, 0.0, 0.0),
+        #        rot=(1.0, 0.0, 0.0, 0.0),
+        #        joint_pos={".*": 0.0},
+        #    ),
+        #)
         self.robot = Articulation(cfg=self.cfg.robot_cfg)
 
         self.scene.articulations["robot"] = self.robot
