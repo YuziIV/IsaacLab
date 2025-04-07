@@ -1,36 +1,19 @@
-# Copyright (c) 2022-2025, The Isaac Lab Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
-#SHADOWHAND CFG
-#from isaaclab_assets.robots.shadow_hand import SHADOW_HAND_CFG
-
-from isaacsim import SimulationApp
-
-# URDF import, configuration and simulation sample
-kit = SimulationApp({"renderer": "RaytracedLighting", "headless": False})
-import omni.kit.commands
-from isaacsim.core.prims import Articulation
-from isaacsim.core.utils.extensions import get_extension_path_from_name
-from pxr import Gf, PhysxSchema, Sdf, UsdLux, UsdPhysics
-
-
-
-import isaaclab.envs.mdp as mdp
-import isaaclab.sim as sim_utils
-from isaaclab.assets import ArticulationCfg, RigidObjectCfg
 from isaaclab.envs import DirectRLEnvCfg
+from isaaclab.sim import SimulationCfg, PhysxCfg
+from isaaclab.scene import InteractiveSceneCfg
+from isaaclab.utils.configclass import configclass
+from isaaclab.assets import ArticulationCfg, RigidObjectCfg
+from isaaclab.actuators.actuator_cfg import ImplicitActuatorCfg
+from isaaclab.sim.spawners.from_files import UsdFileCfg
+from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
+from isaaclab.markers import VisualizationMarkersCfg
+import isaaclab.sim as sim_utils
+import isaaclab.envs.mdp as mdp
+from isaaclab.sim.spawners.materials.physics_materials_cfg import RigidBodyMaterialCfg
 from isaaclab.managers import EventTermCfg as EventTerm
 from isaaclab.managers import SceneEntityCfg
-from isaaclab.markers import VisualizationMarkersCfg
-from isaaclab.scene import InteractiveSceneCfg
-from isaaclab.sim import PhysxCfg, SimulationCfg
-from isaaclab.sim.spawners.materials.physics_materials_cfg import RigidBodyMaterialCfg
-from isaaclab.utils import configclass
-from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
-from isaaclab.utils.noise import GaussianNoiseCfg, NoiseModelWithAdditiveBiasCfg
 
+usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd"
 
 #@configclass
 #class EventCfg:
@@ -123,14 +106,14 @@ from isaaclab.utils.noise import GaussianNoiseCfg, NoiseModelWithAdditiveBiasCfg
 #            "distribution": "gaussian",
 #        },
 #    )
-    
+ 
 @configclass
 class BionicArmEnvCfg(DirectRLEnvCfg):
-   # env
+    # Scene and sim
     decimation = 2
     episode_length_s = 10.0
-    action_space = 20
-    observation_space = 157  # (full)
+    action_space = 7
+    observation_space = 120  # (full)
     state_space = 0
     asymmetric_obs = False
     obs_type = "full"
@@ -147,18 +130,75 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
             bounce_threshold_velocity=0.2,
         ),
     )
-    # robot
-    robot_cfg: ArticulationCfg = import_config.replace(prim_path="/World/envs/env_.*/Robot").replace(
+
+
+    # Robot setup using the converted USD file and actuator config
+    #BIONIC_ARM_CFG = ArticulationCfg(
+    robot_cfg = ArticulationCfg(
+        prim_path="/World/envs/env_.*/Robot",
+        spawn=sim_utils.UsdFileCfg(
+            usd_path=usd_path,
+            activate_contact_sensors=False,
+            rigid_props=sim_utils.RigidBodyPropertiesCfg(
+                disable_gravity=True,
+                retain_accelerations=True,
+                max_depenetration_velocity=1000.0,
+            ),
+            articulation_props=sim_utils.ArticulationRootPropertiesCfg(
+                enabled_self_collisions=False,
+                solver_position_iteration_count=8,
+                solver_velocity_iteration_count=0,
+                sleep_threshold=0.005,
+                stabilization_threshold=0.0005,
+            ),
+            joint_drive_props=sim_utils.JointDrivePropertiesCfg(drive_type="force"),
+        ),
         init_state=ArticulationCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.5),
-            rot=(1.0, 0.0, 0.0, 0.0),
+            pos=(0.0, -0.15, 0.5),
+            rot=(0.7071068, 0.7071068, 0.0, 0.0),
             joint_pos={".*": 0.0},
-        )
+        ),
+        actuators={
+            "fingers": ImplicitActuatorCfg(
+                joint_names_expr=[
+                    "palm_joint",
+                    "pinky_joint",
+                    "pinky_mimic_joint",
+                    "ring_joint",
+                    "ring_mimic_joint",
+                    "middle_joint",
+                    "middle_mimic_joint",
+                    "pointer_joint",
+                    "pointer_mimic_joint",
+                    "thumb_swivel_joint",
+                    "thumb_joint",
+                    "thumb_mimic_joint",
+                ],
+                effort_limit_sim={
+                    "palm_joint": 5.0,
+                    "pinky_joint": 2.0,
+                    "ring_joint": 2.0,
+                    "middle_joint": 2.0,
+                    "pointer_joint": 2.0,
+                    "thumb_swivel_joint": 2.0,
+                    "thumb_joint": 2.0,
+                },
+                stiffness={".*": 1.0},
+                damping={".*": 0.1},
+            ),
+        },
+        soft_joint_pos_limit_factor=1.0,
     )
-        
+    #robot_cfg: ArticulationCfg = BIONIC_ARM_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
+    #    init_state=ArticulationCfg.InitialStateCfg(
+    #        pos=(0.0, -0.15, 0.5),
+    #        rot=(0.7071068, 0.7071068, 0.0, 0.0),
+    #        joint_pos={".*": 0.0},
+    #    )
+    #)
     actuated_joint_names = [
         "palm_joint",
-        "piny_joint",
+        "pinky_joint",
         "ring_joint",
         "middle_joint",
         "pointer_joint",
@@ -172,7 +212,9 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
         "pointer_mimic_link",
         "thumb_mimic_link",
     ]
+    
 
+    
     # in-hand object
     object_cfg: RigidObjectCfg = RigidObjectCfg(
         prim_path="/World/envs/env_.*/object",
@@ -223,60 +265,3 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
     av_factor = 0.1
     act_moving_average = 1.0
     force_torque_obs_scale = 10.0
-
-#
-#@configclass
-#class BionicArmOpenAIEnvCfg(BionicArmEnvCfg):
-#    # env
-#    decimation = 3
-#    episode_length_s = 8.0
-#    action_space = 20
-#    observation_space = 42
-#    state_space = 187
-#    asymmetric_obs = True
-#    obs_type = "openai"
-#    # simulation
-#    sim: SimulationCfg = SimulationCfg(
-#        dt=1 / 60,
-#        render_interval=decimation,
-#        physics_material=RigidBodyMaterialCfg(
-#            static_friction=1.0,
-#            dynamic_friction=1.0,
-#        ),
-#        physx=PhysxCfg(
-#            bounce_threshold_velocity=0.2,
-#            gpu_max_rigid_contact_count=2**23,
-#            gpu_max_rigid_patch_count=2**23,
-#        ),
-#    )
-#    # reset
-#    reset_position_noise = 0.01  # range of position at reset
-#    reset_dof_pos_noise = 0.2  # range of dof pos at reset
-#    reset_dof_vel_noise = 0.0  # range of dof vel at reset
-#    # reward scales
-#    dist_reward_scale = -10.0
-#    rot_reward_scale = 1.0
-#    rot_eps = 0.1
-#    action_penalty_scale = -0.0002
-#    reach_goal_bonus = 250
-#    fall_penalty = -50
-#    fall_dist = 0.24
-#    vel_obs_scale = 0.2
-#    success_tolerance = 0.4
-#    max_consecutive_success = 50
-#    av_factor = 0.1
-#    act_moving_average = 0.3
-#    force_torque_obs_scale = 10.0
-#    # domain randomization config
-#    events: EventCfg = EventCfg()
-#    # at every time-step add gaussian noise + bias. The bias is a gaussian sampled at reset
-#    action_noise_model: NoiseModelWithAdditiveBiasCfg = NoiseModelWithAdditiveBiasCfg(
-#        noise_cfg=GaussianNoiseCfg(mean=0.0, std=0.05, operation="add"),
-#        bias_noise_cfg=GaussianNoiseCfg(mean=0.0, std=0.015, operation="abs"),
-#    )
-#    # at every time-step add gaussian noise + bias. The bias is a gaussian sampled at reset
-#    observation_noise_model: NoiseModelWithAdditiveBiasCfg = NoiseModelWithAdditiveBiasCfg(
-#        noise_cfg=GaussianNoiseCfg(mean=0.0, std=0.002, operation="add"),
-#        bias_noise_cfg=GaussianNoiseCfg(mean=0.0, std=0.0001, operation="abs"),
-#    )
-#

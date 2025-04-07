@@ -6,12 +6,12 @@ from isaaclab.assets.articulation import ArticulationCfg
 ##
 # Configuration
 ##
+usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd"
 
 BIONIC_ARM_CFG = ArticulationCfg(
     prim_path="/World/Robot",
     spawn=sim_utils.UsdFileCfg(
-        usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd",
-        activate_contact_sensors=False,
+        usd_path = usd_path,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=True,
             retain_accelerations=True,
@@ -29,7 +29,7 @@ BIONIC_ARM_CFG = ArticulationCfg(
         fixed_tendons_props=sim_utils.FixedTendonPropertiesCfg(limit_stiffness=30.0, damping=0.1),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        pos=(0.0, 0.0, 0.0),
+        pos=(0.0, -0.15, 0.5),
         rot=(0.7071068, 0.7071068, 0.0, 0.0),
         joint_pos={".*": 0.0},
     ),
