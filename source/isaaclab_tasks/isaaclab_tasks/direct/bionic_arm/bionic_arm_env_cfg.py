@@ -32,102 +32,101 @@ from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 from isaaclab.utils.noise import GaussianNoiseCfg, NoiseModelWithAdditiveBiasCfg
 
 
-@configclass
-class EventCfg:
-    """Configuration for randomization."""
-
-    # -- robot
-    robot_physics_material = EventTerm(
-        func=mdp.randomize_rigid_body_material,
-        mode="reset",
-        min_step_count_between_reset=720,
-        params={
-            "asset_cfg": SceneEntityCfg("robot"),
-            "static_friction_range": (0.7, 1.3),
-            "dynamic_friction_range": (1.0, 1.0),
-            "restitution_range": (1.0, 1.0),
-            "num_buckets": 250,
-        },
-    )
-    robot_joint_stiffness_and_damping = EventTerm(
-        func=mdp.randomize_actuator_gains,
-        min_step_count_between_reset=720,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
-            "stiffness_distribution_params": (0.75, 1.5),
-            "damping_distribution_params": (0.3, 3.0),
-            "operation": "scale",
-            "distribution": "log_uniform",
-        },
-    )
-    robot_joint_pos_limits = EventTerm(
-        func=mdp.randomize_joint_parameters,
-        min_step_count_between_reset=720,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
-            "lower_limit_distribution_params": (0.00, 0.01),
-            "upper_limit_distribution_params": (0.00, 0.01),
-            "operation": "add",
-            "distribution": "gaussian",
-        },
-    )
-    robot_tendon_properties = EventTerm(
-        func=mdp.randomize_fixed_tendon_parameters,
-        min_step_count_between_reset=720,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("robot", fixed_tendon_names=".*"),
-            "stiffness_distribution_params": (0.75, 1.5),
-            "damping_distribution_params": (0.3, 3.0),
-            "operation": "scale",
-            "distribution": "log_uniform",
-        },
-    )
-
-    # -- object
-    object_physics_material = EventTerm(
-        func=mdp.randomize_rigid_body_material,
-        min_step_count_between_reset=720,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("object"),
-            "static_friction_range": (0.7, 1.3),
-            "dynamic_friction_range": (1.0, 1.0),
-            "restitution_range": (1.0, 1.0),
-            "num_buckets": 250,
-        },
-    )
-    object_scale_mass = EventTerm(
-        func=mdp.randomize_rigid_body_mass,
-        min_step_count_between_reset=720,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("object"),
-            "mass_distribution_params": (0.5, 1.5),
-            "operation": "scale",
-            "distribution": "uniform",
-        },
-    )
-
-    # -- scene
-    reset_gravity = EventTerm(
-        func=mdp.randomize_physics_scene_gravity,
-        mode="interval",
-        is_global_time=True,
-        interval_range_s=(36.0, 36.0),  # time_s = num_steps * (decimation * dt)
-        params={
-            "gravity_distribution_params": ([0.0, 0.0, 0.0], [0.0, 0.0, 0.4]),
-            "operation": "add",
-            "distribution": "gaussian",
-        },
-    )
-
-
+#@configclass
+#class EventCfg:
+#    """Configuration for randomization."""
+#
+#    # -- robot
+#    robot_physics_material = EventTerm(
+#        func=mdp.randomize_rigid_body_material,
+#        mode="reset",
+#        min_step_count_between_reset=720,
+#        params={
+#            "asset_cfg": SceneEntityCfg("robot"),
+#            "static_friction_range": (0.7, 1.3),
+#            "dynamic_friction_range": (1.0, 1.0),
+#            "restitution_range": (1.0, 1.0),
+#            "num_buckets": 250,
+#        },
+#    )
+#    robot_joint_stiffness_and_damping = EventTerm(
+#        func=mdp.randomize_actuator_gains,
+#        min_step_count_between_reset=720,
+#        mode="reset",
+#        params={
+#            "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
+#            "stiffness_distribution_params": (0.75, 1.5),
+#            "damping_distribution_params": (0.3, 3.0),
+#            "operation": "scale",
+#            "distribution": "log_uniform",
+#        },
+#    )
+#    robot_joint_pos_limits = EventTerm(
+#        func=mdp.randomize_joint_parameters,
+#        min_step_count_between_reset=720,
+#        mode="reset",
+#        params={
+#            "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
+#            "lower_limit_distribution_params": (0.00, 0.01),
+#            "upper_limit_distribution_params": (0.00, 0.01),
+#            "operation": "add",
+#            "distribution": "gaussian",
+#        },
+#    )
+#    robot_tendon_properties = EventTerm(
+#        func=mdp.randomize_fixed_tendon_parameters,
+#        min_step_count_between_reset=720,
+#        mode="reset",
+#        params={
+#            "asset_cfg": SceneEntityCfg("robot", fixed_tendon_names=".*"),
+#            "stiffness_distribution_params": (0.75, 1.5),
+#            "damping_distribution_params": (0.3, 3.0),
+#            "operation": "scale",
+#            "distribution": "log_uniform",
+#        },
+#    )
+#
+#    # -- object
+#    object_physics_material = EventTerm(
+#        func=mdp.randomize_rigid_body_material,
+#        min_step_count_between_reset=720,
+#        mode="reset",
+#        params={
+#            "asset_cfg": SceneEntityCfg("object"),
+#            "static_friction_range": (0.7, 1.3),
+#            "dynamic_friction_range": (1.0, 1.0),
+#            "restitution_range": (1.0, 1.0),
+#            "num_buckets": 250,
+#        },
+#    )
+#    object_scale_mass = EventTerm(
+#        func=mdp.randomize_rigid_body_mass,
+#        min_step_count_between_reset=720,
+#        mode="reset",
+#        params={
+#            "asset_cfg": SceneEntityCfg("object"),
+#            "mass_distribution_params": (0.5, 1.5),
+#            "operation": "scale",
+#            "distribution": "uniform",
+#        },
+#    )
+#
+#    # -- scene
+#    reset_gravity = EventTerm(
+#        func=mdp.randomize_physics_scene_gravity,
+#        mode="interval",
+#        is_global_time=True,
+#        interval_range_s=(36.0, 36.0),  # time_s = num_steps * (decimation * dt)
+#        params={
+#            "gravity_distribution_params": ([0.0, 0.0, 0.0], [0.0, 0.0, 0.4]),
+#            "operation": "add",
+#            "distribution": "gaussian",
+#        },
+#    )
+    
 @configclass
 class BionicArmEnvCfg(DirectRLEnvCfg):
-    # env
+   # env
     decimation = 2
     episode_length_s = 10.0
     action_space = 20
@@ -159,7 +158,7 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
         
     actuated_joint_names = [
         "palm_joint",
-        "pink_joint",
+        "piny_joint",
         "ring_joint",
         "middle_joint",
         "pointer_joint",

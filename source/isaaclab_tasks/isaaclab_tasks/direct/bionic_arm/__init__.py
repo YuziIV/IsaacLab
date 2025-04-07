@@ -14,7 +14,8 @@ inhand_task_entry = "isaaclab_tasks.direct.inhand_manipulation"
 
 gym.register(
     id="Isaac-Repose-Cube-BionicArm-Direct-v0",
-    entry_point=f"{inhand_task_entry}.inhand_manipulation_env:InHandManipulationEnv",
+    #entry_point=f"{inhand_task_entry}.inhand_manipulation_env:InHandManipulationEnv",
+    entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
     disable_env_checker=True,
     kwargs={
         "env_cfg_entry_point": f"{__name__}.bionic_arm_env_cfg:BionicArmEnvCfg",
@@ -26,11 +27,12 @@ gym.register(
 
 gym.register(
     id="Isaac-Empty-World-Test-v0",
-    entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
+    #entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
+    entry_point=f"{inhand_task_entry}.inhand_manipulation_env:InHandManipulationEnv",
     disable_env_checker=True,
     kwargs={
         "env_cfg_entry_point": "isaaclab_tasks.direct.empty_env.my_empty_env_cfg:EmptyEnvCfg",
-        "skrl_cfg_entry_point": "isaaclab_tasks.direct.shadow_hand.agents:skrl_ppo_cfg.yaml",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
     },
 )
 

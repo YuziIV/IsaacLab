@@ -8,6 +8,7 @@ from isaaclab.assets.articulation import ArticulationCfg
 ##
 
 BIONIC_ARM_CFG = ArticulationCfg(
+    prim_path="/World/Robot",
     spawn=sim_utils.UsdFileCfg(
         usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd",
         activate_contact_sensors=False,
@@ -28,15 +29,15 @@ BIONIC_ARM_CFG = ArticulationCfg(
         fixed_tendons_props=sim_utils.FixedTendonPropertiesCfg(limit_stiffness=30.0, damping=0.1),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
-        pos=(0.0, 0.0, 0.5),
-        rot=(0.0, 0.0, -0.7071, 0.7071),
+        pos=(0.0, 0.0, 0.0),
+        rot=(0.7071068, 0.7071068, 0.0, 0.0),
         joint_pos={".*": 0.0},
     ),
     actuators={
         "fingers": ImplicitActuatorCfg(
             joint_names_expr=[
                 "palm_joint",
-                "pink_joint",
+                "pinky_joint",
                 "ring_joint", 
                 "middle_joint",
                 "pointer_joint",
@@ -45,7 +46,7 @@ BIONIC_ARM_CFG = ArticulationCfg(
             ],
             effort_limit={
                 "palm_joint": 5.0,
-                "pink_joint": 2.0,
+                "pinky_joint": 2.0,
                 "ring_joint": 2.0,
                 "middle_joint": 2.0,
                 "pointer_joint": 2.0,

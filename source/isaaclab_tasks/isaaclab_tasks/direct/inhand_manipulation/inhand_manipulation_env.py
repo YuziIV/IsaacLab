@@ -10,7 +10,6 @@ import numpy as np
 import torch
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
-
 import isaaclab.sim as sim_utils
 from isaaclab.assets import Articulation, RigidObject
 from isaaclab.envs import DirectRLEnv
@@ -23,13 +22,10 @@ if TYPE_CHECKING:
     from isaaclab_tasks.direct.shadow_hand.shadow_hand_env_cfg import ShadowHandEnvCfg
     from isaaclab_tasks.direct.bionic_arm.bionic_arm_env_cfg import BionicArmEnvCfg
 
-
 class InHandManipulationEnv(DirectRLEnv):
     cfg: AllegroHandEnvCfg | ShadowHandEnvCfg | BionicArmEnvCfg
-
     def __init__(self, cfg: AllegroHandEnvCfg | ShadowHandEnvCfg | BionicArmEnvCfg , render_mode: str | None = None, **kwargs):
-        super().__init__(cfg, render_mode, **kwargs)
-
+        super().__init__(cfg, render_mode, **kwargs)    
         self.num_hand_dofs = self.hand.num_joints
 
         # buffers for position targets
