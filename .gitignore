@@ -60,3 +60,5 @@ _build
 
 # Pre-Trained Checkpoints
 /.pretrained_checkpoints/
+
+/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/.temp

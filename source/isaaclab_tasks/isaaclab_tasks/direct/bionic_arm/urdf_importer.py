@@ -1,5 +1,5 @@
 import omni.kit.commands
-from isaacsim.core.utils.extensions import get_extension_path_from_name
+#from isaacsim.core.utils.extensions import get_extension_path_from_name
 
 
 class ImportURDF:
@@ -12,12 +12,13 @@ class ImportURDF:
         status, import_config = omni.kit.commands.execute("URDFCreateImportConfig")
         import_config.merge_fixed_joints = False  
         import_config.convex_decomp = False       
-        import_config.import_inertia_tensor = True  
+        import_config.import_inertia_tensor = True
         import_config.fix_base = True              
         import_config.distance_scale = 1.0          
         import_config.make_default_prim = True      
         import_config.self_collision = True         
-        import_config.density = 0.0                 
+        import_config.density = 0.0  
+        import_config.set_parse_mimic(False)         
 
         # Import the URDF and convert it to USD at the destination path
         status, prim_path = omni.kit.commands.execute(
@@ -28,3 +29,5 @@ class ImportURDF:
             dest_path=self.dest_path
         )
         return status, prim_path
+
+            
