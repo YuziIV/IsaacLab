@@ -26,8 +26,8 @@ gym.register(
 
 gym.register(
     id="Isaac-Empty-World-Test-v0",
-    #entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
-    entry_point=f"{inhand_task_entry}.inhand_manipulation_env:InHandManipulationEnv",
+    entry_point="isaaclab_tasks.direct.empty_env.my_empty_env:EmptyEnv",
+    #entry_point=f"{inhand_task_entry}.inhand_manipulation_env:InHandManipulationEnv",
     disable_env_checker=True,
     kwargs={
         "env_cfg_entry_point": "isaaclab_tasks.direct.empty_env.my_empty_env_cfg:EmptyEnvCfg",
