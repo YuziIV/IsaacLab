@@ -18,7 +18,6 @@ import os
 from pxr import Usd, UsdPhysics, PhysxSchema, Gf, Sdf
 import omni.usd
 
-
 urdf_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/urdf/EZARM_SLDASM/urdf/EZARM_SLDASM.urdf"
 usd_path = "/workspace/isaaclab/source/isaaclab_tasks/isaaclab_tasks/direct/bionic_arm/assets/usd/bionic_arm.usd"
 
@@ -129,8 +128,8 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
         dt=1 / 120,
         render_interval=decimation,
         physics_material=RigidBodyMaterialCfg(
-            static_friction=0.35,
-            dynamic_friction=0.25,
+            static_friction=1.0,
+            dynamic_friction=1.0,
         ),
         physx=PhysxCfg(
             bounce_threshold_velocity=0.2,
@@ -156,8 +155,8 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
             ),
             articulation_props=sim_utils.ArticulationRootPropertiesCfg(
                 enabled_self_collisions=True,
-                solver_position_iteration_count=8,
-                solver_velocity_iteration_count=0,
+                solver_position_iteration_count=16,
+                solver_velocity_iteration_count=2,
                 sleep_threshold=0.005,
                 stabilization_threshold=0.0005,
             ),
@@ -193,16 +192,15 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
                     "pointer_joint": 2.0,
                     "thumb_swivel_joint": 2.0,
                     "thumb_joint": 2.0,
-
                 },
                 stiffness={
-                    "palm_joint": 0.1,
-                    "pinky_joint": 0.1,
-                    "ring_joint": 0.1,
-                    "middle_joint": 0.1,
-                    "pointer_joint": 0.1,
-                    "thumb_swivel_joint": 0.1,
-                    "thumb_joint": 0.1,
+                    "palm_joint": 1.0,
+                    "pinky_joint": 1.0,
+                    "ring_joint": 1.0,
+                    "middle_joint": 1.0,
+                    "pointer_joint": 1.0,
+                    "thumb_swivel_joint": 1.0,
+                    "thumb_joint": 1.0,
 
                 },
                 damping={                    
@@ -254,8 +252,8 @@ class BionicArmEnvCfg(DirectRLEnvCfg):
                 kinematic_enabled=False,
                 disable_gravity=False,
                 enable_gyroscopic_forces=True,
-                solver_position_iteration_count=16,
-                solver_velocity_iteration_count=2,
+                solver_position_iteration_count=8,
+                solver_velocity_iteration_count=0,
                 sleep_threshold=0.005,
                 stabilization_threshold=0.0025,
                 max_depenetration_velocity=1000.0,
