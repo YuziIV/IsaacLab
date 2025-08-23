@@ -1,0 +1,14 @@
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py \
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-Shadow-Direct-v0 --algorithm MPPO 
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-Shadow-Direct-v0 --algorithm MAPPO 
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-Shadow-Direct-v0 --algorithm PPO 
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO 
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/play.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --num_envs 1 --checkpoint   /workspace/isaaclab/logs/skrl/bionic_arm/2025-04-18_10-15-43_ppo_torch/checkpoints/best_agent.pt
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --headless
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/play.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --num_envs 1 --checkpoint   /workspace/isaaclab/logs/skrl/bionic_arm/2025-08-20_11-23-18_ppo_torch/checkpoints/best_agent.pt
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --headless
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/play.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --num_envs 1 --checkpoint   /workspace/isaaclab/logs/skrl/bionic_arm/2025-08-20_11-23-18_ppo_torch/checkpoints/best_agent.pt
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --headless
+exit 
+./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Isaac-Repose-Cube-BionicArm-Direct-v0 --algorithm PPO --headless
+exit 
